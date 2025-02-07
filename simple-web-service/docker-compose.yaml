@@ -1,0 +1,14 @@
+
+# replicate command docker run --mount type=bind,source="$(pwd)/local_logs.log",target=/usr/src/app/text.log devopsdockeruh/simple-web-service
+#  with Docker compose
+
+services:
+  simple-web-service:
+    image: devopsdockeruh/simple-web-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./local_logs.log
+        target: /usr/src/app/text.log
