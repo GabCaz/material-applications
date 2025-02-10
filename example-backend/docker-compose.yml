@@ -1,0 +1,17 @@
+
+services:
+  example-front-end:
+    build:
+      context: .
+      dockerfile: ./example-frontend/Dockerfile
+    image: example-frontend:latest
+    ports:
+      - "3000:5000"
+
+  example-backend:
+    build:
+      context: .
+      dockerfile: ./example-backend/Dockerfile
+    image: example-backend:latest
+    ports:
+      - "8080:8080"
