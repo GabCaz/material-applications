@@ -13,5 +13,20 @@ services:
       context: .
       dockerfile: ./example-backend/Dockerfile
     image: example-backend:latest
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
     ports:
       - "8080:8080"
+    networks:
+        - backend
+
+  redis:
+    image: redis
+    networks:
+        - backend
+
+networks:
+    backend:
+        driver: bridge
