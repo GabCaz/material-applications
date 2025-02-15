@@ -1,4 +1,3 @@
-
 services:
   example-front-end:
     build:
@@ -15,18 +14,33 @@ services:
     image: example-backend:latest
     depends_on:
       - redis
+      - db
     environment:
-      - REDIS_HOST=redis
+      REDIS_HOST: redis
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "8080:8080"
     networks:
-        - backend
+      - backend
 
   redis:
     image: redis
     networks:
-        - backend
+      - backend
+
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    container_name: postgres
+    networks:
+      - backend
 
 networks:
-    backend:
-        driver: bridge
+  backend:
+    driver: bridge
