@@ -5,7 +5,9 @@ services:
       dockerfile: ./example-frontend/Dockerfile
     image: example-frontend:latest
     ports:
-      - "3000:5000"
+      - "3000:5000"  # for direct dev access if needed
+    networks:
+      - backend
 
   example-backend:
     build:
@@ -42,6 +44,19 @@ services:
       - backend
     volumes:
       - ./database:/var/lib/postgresql/data
+
+  # accessible from http://localhost (and http://localhost:80)
+  nginx:
+    image: nginx:1.19.10
+    ports:
+      - "80:80"                # Access NGINX via http://localhost:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - example-front-end
+      - example-backend
+    networks:
+      - backend
 
 networks:
   backend:

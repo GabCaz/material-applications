@@ -18,7 +18,7 @@ EXPOSE 8080
 
 # Set environment variables
 ENV PORT=8080
-ENV REQUEST_ORIGIN=http://localhost:3000
+ENV REQUEST_ORIGIN=http://localhost:3000/
 
 # Run the server
 CMD ["./server"]
