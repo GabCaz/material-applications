@@ -3,8 +3,8 @@ services:
     build:
       context: ./example-frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:5000"  # for direct dev access if needed
+#    ports:
+#      - "3000:5000"  # for direct dev access if needed
     networks:
       - backend
 
@@ -20,8 +20,8 @@ services:
       POSTGRES_HOST: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "8080:8080"
+#    ports:
+#      - "8080:8080"
     networks:
       - backend
 
