@@ -1,6 +1,7 @@
 services:
   express-app:
     build: .
+    image: gacazcaz/express-app:latest
     ports:
       - "3000:8080"
 
