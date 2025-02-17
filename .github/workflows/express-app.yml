@@ -20,4 +20,4 @@ jobs:
         with:
           context: ./express-app  # the path to the folder with your Dockerfile.
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/coursepage:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/express-app:latest
