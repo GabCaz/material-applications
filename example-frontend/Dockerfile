@@ -1,34 +1,40 @@
 FROM node:16
 
-# Set working directory inside container
+# Ensure useradd is available
+RUN apt-get update && apt-get install -y passwd
+
+# 1) Work in /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json for better caching
+# 2) Copy package files and install dependencies (as root)
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-
-# Copy rest of the frontend source code
+# 3) Copy the rest of the code
 COPY . .
 
-# Print Node.js and npm versions (for debugging)
+# 4) Print Node.js and npm versions (for debugging)
 RUN node -v
 RUN npm -v
 
-# Build the frontend
-ENV REACT_APP_BACKEND_URL http://localhost:8080/
+# 5) Build the frontend
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/
 RUN npm run build
 
-
-# 8️⃣ Install `serve` globally to serve static files
+# 6) Install `serve` globally so we can serve the build
 RUN npm install -g serve
 
-# Expose the port the app runs on
+# 7) Create a non-root user (named `appuser`), then chown /app
+RUN useradd -m appuser
+RUN chown -R appuser:appuser /app
+
+# 8) Switch to the new user
+USER appuser
+
+# 9) Expose port 5000 (where we plan to serve the build)
 EXPOSE 5000
 
-# Serve the static files
+# 10) Serve the static files
 CMD ["serve", "-s", "-l", "5000", "build"]
 
 # start with `docker build -t example-frontend .` and `docker run -p 3000:5000 example-frontend`
