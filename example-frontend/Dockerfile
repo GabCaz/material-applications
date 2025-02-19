@@ -18,7 +18,7 @@ RUN node -v
 RUN npm -v
 
 # 5) Build the frontend
-ENV REACT_APP_BACKEND_URL=http://localhost:8080/
+ENV REACT_APP_BACKEND_URL=/api
 RUN npm run build
 
 # 6) Install `serve` globally so we can serve the build
